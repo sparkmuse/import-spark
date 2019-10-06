@@ -1,0 +1,12 @@
+language: java
+
+jdk:
+  - openjdk8
+
+cache:
+  directories:
+  - "$HOME/.m2/repository"
+  - "$HOME/.sonar/cache"
+
+install: true
+script: mvn clean install
