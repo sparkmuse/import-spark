@@ -1,13 +1,16 @@
 
-package spark;
+package com.github.sparkmuse.spark;
 
+import com.github.sparkmuse.spark.configuration.FileProperties;
+import com.github.sparkmuse.spark.configuration.InvalidPortNumberException;
+import com.github.sparkmuse.spark.configuration.MySqlProperties;
+import com.github.sparkmuse.spark.model.Deletion;
+import com.github.sparkmuse.spark.model.DeletionClean;
+import com.github.sparkmuse.spark.model.DeletionConverter;
 import org.apache.spark.api.java.function.MapFunction;
 import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.SparkSession;
-import spark.configuration.FileProperties;
-import spark.configuration.InvalidPortNumberException;
-import spark.configuration.MySqlProperties;
 
 import java.io.FileNotFoundException;
 

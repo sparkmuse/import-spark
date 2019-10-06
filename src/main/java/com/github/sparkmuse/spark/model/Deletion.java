@@ -1,4 +1,4 @@
-package spark;
+package com.github.sparkmuse.spark.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

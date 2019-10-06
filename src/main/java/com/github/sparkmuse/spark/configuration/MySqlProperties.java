@@ -1,4 +1,4 @@
-package spark.configuration;
+package com.github.sparkmuse.spark.configuration;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package spark.configuration;
+package com.github.sparkmuse.spark.configuration;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

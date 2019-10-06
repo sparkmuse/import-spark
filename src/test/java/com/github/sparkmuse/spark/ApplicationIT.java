@@ -1,4 +1,4 @@
-package spark;
+package com.github.sparkmuse.spark;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
