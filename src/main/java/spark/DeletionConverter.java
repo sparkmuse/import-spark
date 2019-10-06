@@ -29,17 +29,16 @@ public class DeletionConverter {
                 .object(deletion.getObject())
                 .languageCode(deletion.getLanguageCode())
                 .build();
-
         return deletionClean;
     }
 
     private static String getDefaultString(String creator) {
-        return creator == (null ? null : USER_PATTERN.matcher(creator)).replaceFirst("");
+        return creator == null ? null : USER_PATTERN.matcher(creator).replaceFirst("");
     }
 
     private static LocalDateTime getLocalDateTime(String timeStamp) {
-        return  (timeStamp != null ?
-                LocalDateTime.ofEpochSecond(Long.parseLong(timeStamp) / 1000, 0, ZoneOffset.UTC)) :
+        return  timeStamp != null ?
+                LocalDateTime.ofEpochSecond(Long.parseLong(timeStamp) / 1000, 0, ZoneOffset.UTC) :
                 DEFAULT_DATE;
     }
 }
