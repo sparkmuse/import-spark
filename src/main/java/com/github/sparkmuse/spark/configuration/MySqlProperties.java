@@ -54,10 +54,10 @@ public class MySqlProperties {
             this.serverTimezone = rawProperties.getProperty(SERVER_TIME_ZONE);
 
         } catch (IOException ex) {
-            log.error("Missing {} file", name, new FileNotFoundException());
+            log.error("Missing {} file", name, ex);
             throw new FileNotFoundException();
         } catch (NumberFormatException ex) {
-            log.error("Invalid port number");
+            log.error("Invalid port number", ex);
             throw new InvalidPortNumberException();
         }
     }
