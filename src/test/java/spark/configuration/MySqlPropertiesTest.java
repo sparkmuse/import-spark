@@ -1,5 +1,6 @@
 package spark.configuration;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,11 +12,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MySqlPropertiesTest {
 
+    private MySqlProperties mySqlProperties;
+
+    @BeforeEach
+    void setUp() {
+        mySqlProperties = new MySqlProperties();
+    }
+
     @Test
     @DisplayName("loads properties from file")
     void loadProperties() throws Exception {
 
-        MySqlProperties mySqlProperties = new MySqlProperties();
         mySqlProperties.load("mysql.properties");
 
         Properties connectionProperties = new Properties();
@@ -35,8 +42,6 @@ class MySqlPropertiesTest {
     @DisplayName("throws exception when file not found")
     void missingFile() {
 
-        MySqlProperties mySqlProperties = new MySqlProperties();
-
         assertThatThrownBy(() -> mySqlProperties.load("invalid-file-name"))
                 .isInstanceOf(FileNotFoundException.class);
     }
@@ -44,8 +49,6 @@ class MySqlPropertiesTest {
     @Test
     @DisplayName("throws exception when port cannot be parsed")
     void unparsablePort() {
-
-        MySqlProperties mySqlProperties = new MySqlProperties();
 
         assertThatThrownBy(() -> mySqlProperties.load("mysql-invalid-port.properties"))
                 .isInstanceOf(InvalidPortNumberException.class);
