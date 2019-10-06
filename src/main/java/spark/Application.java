@@ -6,10 +6,13 @@ import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.SparkSession;
 import spark.configuration.FileProperties;
+import spark.configuration.InvalidPortNumberException;
 import spark.configuration.MySqlProperties;
 
+import java.io.FileNotFoundException;
+
 public class Application {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException, InvalidPortNumberException {
 
         SparkSession sparkSession = SparkSession.builder()
                 .appName("Importer Application")

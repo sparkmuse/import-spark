@@ -7,7 +7,7 @@ class ApplicationIT {
 
     @Test
     @DisplayName("application runs")
-    void main() {
+    void main() throws Exception{
 
         String[] args = new String[]{};
         Application.main(args);

@@ -33,7 +33,7 @@ public class MySqlProperties {
         this.connectionProperties = new Properties();
     }
 
-    public void load(String name) {
+    public void load(String name) throws FileNotFoundException, InvalidPortNumberException {
         ClassLoader classLoader = MySqlProperties.class.getClassLoader();
         try (InputStream stream = classLoader.getResourceAsStream(name)) {
             Properties rawProperties = new Properties();
@@ -55,8 +55,10 @@ public class MySqlProperties {
 
         } catch (IOException ex) {
             log.error("Missing {} file", name, new FileNotFoundException());
+            throw new FileNotFoundException();
         } catch (NumberFormatException ex) {
-            log.error("Invalid port number", new NumberFormatException());
+            log.error("Invalid port number");
+            throw new InvalidPortNumberException();
         }
     }
 
