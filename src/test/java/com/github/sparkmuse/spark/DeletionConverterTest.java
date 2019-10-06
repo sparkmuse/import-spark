@@ -78,6 +78,4 @@ class DeletionConverterTest {
             assertThat(actual).isEqualTo(expected);
         }
     }
-
-
 }

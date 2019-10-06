@@ -29,7 +29,7 @@ public class FileProperties {
             this.path = rawProperties.getProperty(PATH_KEY);
 
         } catch (IOException ex) {
-            log.error("Missing {} file", name, new FileNotFoundException());
+            log.error("Missing {} file", name);
             throw new FileNotFoundException();
         }
     }
