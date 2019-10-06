@@ -16,12 +16,12 @@ public class Application {
                 .getOrCreate();
 
         MySqlProperties mySqlProperties = new MySqlProperties();
+        mySqlProperties.load("mysql.properties");
 
         String path = "/Users/alfredo/Downloads/deletions/schema.csv";
 
         String[] headers = {"creationTimestamp", "creator", "deletionTimestamp", "deletor",
                 "subject", "predicate", "object", "languageCode"};
-
 
         sparkSession
                 .read()
