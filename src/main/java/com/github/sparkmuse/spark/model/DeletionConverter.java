@@ -1,7 +1,6 @@
-package spark;
+package com.github.sparkmuse.spark.model;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
@@ -19,7 +18,7 @@ public class DeletionConverter {
         String creator = getDefaultString(deletion.getCreator());
         String deletor = getDefaultString(deletion.getDeletor());
 
-        DeletionClean deletionClean = DeletionClean.builder()
+        return DeletionClean.builder()
                 .creationDateTime(creationDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .creator(creator)
                 .deletionDateTime(deletionDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
@@ -29,7 +28,6 @@ public class DeletionConverter {
                 .object(deletion.getObject())
                 .languageCode(deletion.getLanguageCode())
                 .build();
-        return deletionClean;
     }
 
     private static String getDefaultString(String creator) {
