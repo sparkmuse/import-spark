@@ -4,12 +4,9 @@ package com.github.sparkmuse.spark;
 import com.github.sparkmuse.spark.configuration.FileProperties;
 import com.github.sparkmuse.spark.configuration.InvalidPortNumberException;
 import com.github.sparkmuse.spark.configuration.MySqlProperties;
-import com.github.sparkmuse.spark.model.Deletion;
-import com.github.sparkmuse.spark.model.DeletionClean;
-import com.github.sparkmuse.spark.model.DeletionConverter;
-import org.apache.spark.api.java.function.MapFunction;
-import org.apache.spark.sql.Encoders;
-import org.apache.spark.sql.SaveMode;
+import com.github.sparkmuse.spark.service.MapperService;
+import com.github.sparkmuse.spark.service.ReaderService;
+import com.github.sparkmuse.spark.service.WritterService;
 import org.apache.spark.sql.SparkSession;
 
 import java.io.FileNotFoundException;
@@ -22,23 +19,11 @@ public class Application {
                 .master("local[1]")
                 .getOrCreate();
 
-        MySqlProperties mySqlProperties = new MySqlProperties();
-        mySqlProperties.load("mysql.properties");
+        WritterService writterService = new WritterService(new MySqlProperties("mysql.properties"));
+        ReaderService readerService = new ReaderService(new FileProperties("file.properties"));
+        MapperService mapperService = new MapperService();
 
-        FileProperties fileProperties = new FileProperties();
-        fileProperties.load("file.properties");
-
-        String[] headers = {"creationTimestamp", "creator", "deletionTimestamp", "deletor",
-                "subject", "predicate", "object", "languageCode"};
-
-        sparkSession
-                .read()
-                .csv( fileProperties.getPath())
-                .toDF(headers)
-                .as(Encoders.bean(Deletion.class))
-                .map((MapFunction<Deletion, DeletionClean>) DeletionConverter::from, Encoders.bean(DeletionClean.class))
-                .write()
-                .mode(SaveMode.Append)
-                .jdbc(mySqlProperties.getUrlString(), mySqlProperties.getTable(), mySqlProperties.getConnectionProperties());
+        ImportService importService = new ImportService(sparkSession, readerService, mapperService, writterService);
+        importService.process();
     }
 }

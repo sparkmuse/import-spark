@@ -29,13 +29,12 @@ public class MySqlProperties {
 
     private final Properties connectionProperties;
 
-    public MySqlProperties() {
-        this.connectionProperties = new Properties();
-    }
+    public MySqlProperties(String fileName) throws FileNotFoundException, InvalidPortNumberException {
 
-    public void load(String name) throws FileNotFoundException, InvalidPortNumberException {
+        this.connectionProperties = new Properties();
+
         ClassLoader classLoader = MySqlProperties.class.getClassLoader();
-        try (InputStream stream = classLoader.getResourceAsStream(name)) {
+        try (InputStream stream = classLoader.getResourceAsStream(fileName)) {
             Properties rawProperties = new Properties();
 
             if (stream == null) {
@@ -54,7 +53,7 @@ public class MySqlProperties {
             this.serverTimezone = rawProperties.getProperty(SERVER_TIME_ZONE);
 
         } catch (IOException ex) {
-            log.error("Missing {} file", name, ex);
+            log.error("Missing {} file", fileName, ex);
             throw new FileNotFoundException();
         } catch (NumberFormatException ex) {
             log.error("Invalid port number", ex);
