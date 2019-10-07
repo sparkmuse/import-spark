@@ -8,3 +8,6 @@ merged.csv
 
 # IntelliJ
 out/
+
+deletions-sample/
+!deletions-sample/sample-data.csv

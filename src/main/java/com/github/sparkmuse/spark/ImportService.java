@@ -17,13 +17,13 @@ public class ImportService {
     private final MySqlProperties mySqlProperties;
 
     public void process() {
-        String[] headers = {"creationTimestamp", "creator", "deletionTimestamp", "deletor",
-                "subject", "predicate", "object", "languageCode"};
 
         Dataset<Row> csv = sparkSession
                 .read()
                 .csv(fileProperties.getPath());
 
+        String[] headers = {"creationTimestamp", "creator", "deletionTimestamp", "deletor",
+                "subject", "predicate", "object", "languageCode"};
         Dataset<DeletionClean> deletions = csv.toDF(headers)
                 .as(Encoders.bean(Deletion.class))
                 .map((MapFunction<Deletion, DeletionClean>) DeletionConverter::from, Encoders.bean(DeletionClean.class));
