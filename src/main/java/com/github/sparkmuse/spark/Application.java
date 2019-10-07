@@ -16,11 +16,8 @@ public class Application {
                 .master("local[1]")
                 .getOrCreate();
 
-        MySqlProperties mySqlProperties = new MySqlProperties();
-        mySqlProperties.load("mysql.properties");
-
-        FileProperties fileProperties = new FileProperties();
-        fileProperties.load("file.properties");
+        MySqlProperties mySqlProperties = new MySqlProperties("mysql.properties");
+        FileProperties fileProperties = new FileProperties("file.properties");
 
         ImportService importService = new ImportService(sparkSession, fileProperties, mySqlProperties);
         importService.process();

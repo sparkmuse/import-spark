@@ -1,6 +1,5 @@
 package com.github.sparkmuse.spark.configuration;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,18 +10,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FilePropertiesTest {
 
-    private FileProperties fileProperties;
-
-    @BeforeEach
-    void setUp() {
-        fileProperties = new FileProperties();
-    }
 
     @Test
     @DisplayName("loads properties from file")
     void loadProperties() throws Exception {
 
-        fileProperties.load("file-test.properties");
+        FileProperties fileProperties = new FileProperties("file-test.properties");
 
         assertThat(fileProperties.getPath()).isEqualTo("test.csv");
     }
@@ -31,7 +24,7 @@ class FilePropertiesTest {
     @DisplayName("throws exception when file not found")
     void missingFile() {
 
-        assertThatThrownBy(() -> fileProperties.load("invalid-file-name"))
+        assertThatThrownBy(() -> new FileProperties("invalid-file-name"))
                 .isInstanceOf(FileNotFoundException.class);
     }
 }

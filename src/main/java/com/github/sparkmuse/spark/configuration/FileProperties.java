@@ -16,9 +16,9 @@ public class FileProperties {
 
     private String path;
 
-    public void load(String name) throws FileNotFoundException {
+    public FileProperties(String fileName) throws FileNotFoundException {
         ClassLoader classLoader = FileProperties.class.getClassLoader();
-        try (InputStream stream = classLoader.getResourceAsStream(name)) {
+        try (InputStream stream = classLoader.getResourceAsStream(fileName)) {
             Properties rawProperties = new Properties();
 
             if (stream == null) {
@@ -29,7 +29,7 @@ public class FileProperties {
             this.path = rawProperties.getProperty(PATH_KEY);
 
         } catch (IOException ex) {
-            log.error("Missing {} file", name, ex);
+            log.error("Missing {} file", fileName, ex);
             throw new FileNotFoundException();
         }
     }
