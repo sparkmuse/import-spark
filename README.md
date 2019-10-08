@@ -28,14 +28,20 @@ import.sh
 Update the path to the data file by updating it's absolute path in the file bellow
 
 ```shell script
-src/java/resources/file.properties
+src/java/resources/application.properties
+```
+
+The file path can also be configured using the command line
+```shell script
+java -Dapp.file.path=<PATH_TO_FILE>.csv -jar target/import-spark-1.0.0.jar
+
 ```
 **NOTE:** We recommend to use a smaller set of the data for testing purposes before switching to all the data.
 
 ### Database
 Update the configuration corresponding to your mysql in the file
 ```shell script
-src/java/resources/mysql.properties
+src/java/resources/application.properties
 ```
 
 Create the sql table by running the following statement

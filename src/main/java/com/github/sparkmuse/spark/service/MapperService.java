@@ -7,7 +7,9 @@ import org.apache.spark.api.java.function.MapFunction;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MapperService {
 
     private static final String[] headers = {"creationTimestamp", "creator", "deletionTimestamp", "deletor",
