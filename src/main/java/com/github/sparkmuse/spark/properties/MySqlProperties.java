@@ -1,11 +1,8 @@
 package com.github.sparkmuse.spark.properties;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.Properties;
@@ -21,6 +18,7 @@ public class MySqlProperties {
     private String dataBase;
     private String table;
     private String serverTimezone;
+    private String url;
     private Connection connection;
 
     @Setter
@@ -28,11 +26,6 @@ public class MySqlProperties {
         private String user;
         private String password;
         private String driver;
-    }
-
-    public String getUrlString() {
-        return String.format("jdbc:mysql://%s:%d/%s?serverTimezone=%s",
-                this.host, this.port, this.dataBase, this.serverTimezone);
     }
 
     public Properties getConnectionProperties() {

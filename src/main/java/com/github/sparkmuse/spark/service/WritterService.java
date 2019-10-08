@@ -16,6 +16,6 @@ public class WritterService {
     public void write(Dataset<DeletionClean> deletions) {
         deletions.write()
                 .mode(SaveMode.Append)
-                .jdbc(mySqlProperties.getUrlString(), mySqlProperties.getTable(), mySqlProperties.getConnectionProperties());
+                .jdbc(mySqlProperties.getUrl(), mySqlProperties.getTable(), mySqlProperties.getConnectionProperties());
     }
 }

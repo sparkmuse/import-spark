@@ -1,0 +1,7 @@
+
+mysql:
+  url: jdbc:h2:mem:${mysql.database};DB_CLOSE_DELAY=-1
+  connection:
+    user: sa
+    password: sa
+    driver: org.h2.Driver

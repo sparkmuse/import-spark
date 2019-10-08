@@ -5,6 +5,7 @@ mysql:
   serverTimezone: Europe/Berlin
   database: DataHorizontal
   table: deletions
+  url: jdbc:mysql://${mysql.host}:${mysql.port}/${mysql.database}?serverTimezone=${mysql.serverTimezone}
   connection:
     user: root
     password: root
