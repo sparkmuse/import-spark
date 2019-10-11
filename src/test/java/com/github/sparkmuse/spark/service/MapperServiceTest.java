@@ -1,38 +1,32 @@
 package com.github.sparkmuse.spark.service;
 
 import com.github.sparkmuse.spark.model.DeletionClean;
+import com.github.sparkmuse.spark.service.extension.SparkExtension;
+import com.github.sparkmuse.spark.service.extension.SparkTest;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SparkTest
 class MapperServiceTest {
 
-    private static SparkSession sparksession;
+    private SparkSession sparkSession = SparkExtension.getSparksession();
+
     private MapperService mapperService;
-
-    @BeforeAll
-    static void initSparkSession() {
-        sparksession = SparkSession.builder()
-                .appName("Test spark")
-                .master("local[1]")
-                .getOrCreate();
-    }
-
-    @AfterAll
-    static void closeSparkSession() {
-        sparksession.close();
-    }
 
     @BeforeEach
     void setUp() {
-        mapperService = new MapperService();
+        mapperService = new MapperService(sparkSession);
     }
 
     @Test
@@ -42,12 +36,12 @@ class MapperServiceTest {
         List<String> list = asList(
                 "1575158401000,/user/creator,1575158401000,/user/deletor,subject,predicate,object,en",
                 "1575158401000,/user/creator,1575158401000,/user/deletor,subject,predicate,object,en");
-        Dataset<String> csvString = sparksession.createDataset(list, Encoders.STRING());
-        Dataset<Row> csv = sparksession.read().csv(csvString);
+        Dataset<String> csvString = sparkSession.createDataset(list, Encoders.STRING());
+        Dataset<Row> csv = sparkSession.read().csv(csvString);
 
-        DeletionClean deletionClean1 = createDeletion();
-        DeletionClean deletionClean2 = createDeletion();
-        List<DeletionClean> expected = asList(deletionClean1, deletionClean2);
+        List<DeletionClean> expected = asList(
+                createDeletion(),
+                createDeletion());
 
         Dataset<DeletionClean> actualDataSet = mapperService.map(csv);
 
@@ -56,6 +50,20 @@ class MapperServiceTest {
         assertThat(actualList)
                 .usingFieldByFieldElementComparator()
                 .containsExactlyInAnyOrderElementsOf(expected);
+    }
+
+    @Test
+    @DisplayName("maps to empty dataset from empty list")
+    void canMapEmptyList() {
+
+        Dataset<Row> csv = sparkSession.emptyDataFrame();
+        List<DeletionClean> expected = emptyList();
+
+        Dataset<DeletionClean> actualDataSet = mapperService.map(csv);
+
+        List<DeletionClean> actualList = actualDataSet.collectAsList();
+
+        assertThat(actualList).isEmpty();
     }
 
     private DeletionClean createDeletion() {
