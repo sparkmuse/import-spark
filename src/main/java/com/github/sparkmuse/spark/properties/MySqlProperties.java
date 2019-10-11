@@ -28,6 +28,7 @@ public class MySqlProperties {
         private String driver;
     }
 
+    @ConfigurationProperties("mysql.connection")
     public Properties getConnectionProperties() {
         final Properties properties = new Properties();
         properties.put("user", this.connection.user);

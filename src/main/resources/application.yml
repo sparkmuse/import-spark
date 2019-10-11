@@ -22,3 +22,8 @@ spark:
 spring:
   banner:
     location: banner.txt
+
+logging:
+  level:
+    org.apache.spark: ERROR
+    org.spark_project.jetty: ERROR
