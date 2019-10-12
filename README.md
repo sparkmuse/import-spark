@@ -50,17 +50,18 @@ CREATE DATABASE IF NOT EXISTS DataHorizontal;
 
 USE DataHorizontal;
 
-CREATE TABLE IF NOT EXISTS `deletions` (
-  id INT AUTO_INCREMENT PRIMARY KEY, 
-  `creationDateTime` date DEFAULT NULL,
-  `creator` text,
-  `deletionDateTime`date DEFAULT NULL,
-  `deletor` text,
-  `subject` text,
-  `predicate` text,
-  `object` text,
-  `languageCode` text
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `deletions`
+(
+    id                 INT AUTO_INCREMENT PRIMARY KEY,
+    `creationDateTime` timestamp DEFAULT NULL,
+    `creator`          varchar(250),
+    `deletionDateTime` timestamp DEFAULT NULL,
+    `deletor`          varchar(250),
+    `subject`          varchar(250),
+    `predicate`        varchar(250),
+    `object`           varchar(250),
+    `languageCode`     varchar(250)
+) ENGINE=InnoDB;
 ```
 
 ### Compilation
