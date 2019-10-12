@@ -22,7 +22,8 @@ public class MySqlProperties {
     private Connection connection;
 
     @Setter
-    private static class Connection {
+    @Getter
+    public static class Connection {
         private String user;
         private String password;
         private String driver;

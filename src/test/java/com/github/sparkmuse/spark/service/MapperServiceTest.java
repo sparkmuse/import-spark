@@ -66,7 +66,7 @@ class MapperServiceTest {
         assertThat(actualList).isEmpty();
     }
 
-    private DeletionClean createDeletion() {
+    private static DeletionClean createDeletion() {
         return DeletionClean.builder()
                 .creationDateTime("2019-12-01T00:00:01")
                 .creator("creator")
