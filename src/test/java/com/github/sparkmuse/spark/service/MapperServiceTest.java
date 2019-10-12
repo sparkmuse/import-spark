@@ -20,13 +20,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SparkTest
 class MapperServiceTest {
 
-    private SparkSession sparkSession = SparkExtension.getSparksession();
+    private final SparkSession SPARK_SESSION = SparkExtension.getSparksession();
 
     private MapperService mapperService;
 
     @BeforeEach
     void setUp() {
-        mapperService = new MapperService(sparkSession);
+        mapperService = new MapperService(SPARK_SESSION);
     }
 
     @Test
@@ -36,8 +36,8 @@ class MapperServiceTest {
         List<String> list = asList(
                 "1575158401000,/user/creator,1575158401000,/user/deletor,subject,predicate,object,en",
                 "1575158401000,/user/creator,1575158401000,/user/deletor,subject,predicate,object,en");
-        Dataset<String> csvString = sparkSession.createDataset(list, Encoders.STRING());
-        Dataset<Row> csv = sparkSession.read().csv(csvString);
+        Dataset<String> csvString = SPARK_SESSION.createDataset(list, Encoders.STRING());
+        Dataset<Row> csv = SPARK_SESSION.read().csv(csvString);
 
         List<DeletionClean> expected = asList(
                 createDeletion(),
@@ -56,7 +56,7 @@ class MapperServiceTest {
     @DisplayName("maps to empty dataset from empty list")
     void canMapEmptyList() {
 
-        Dataset<Row> csv = sparkSession.emptyDataFrame();
+        Dataset<Row> csv = SPARK_SESSION.emptyDataFrame();
         List<DeletionClean> expected = emptyList();
 
         Dataset<DeletionClean> actualDataSet = mapperService.map(csv);

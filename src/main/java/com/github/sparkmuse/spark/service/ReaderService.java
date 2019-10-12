@@ -12,8 +12,9 @@ import org.springframework.stereotype.Service;
 public class ReaderService {
 
     private final FileProperties fileProperties;
+    private final SparkSession sparkSession;
 
-    public Dataset<Row> read(SparkSession sparkSession) {
+    public Dataset<Row> read() {
         return sparkSession
                 .read()
                 .csv(fileProperties.getPath());
