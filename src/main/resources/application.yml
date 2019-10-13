@@ -27,3 +27,4 @@ logging:
   level:
     org.apache.spark: ERROR
     org.spark_project.jetty: ERROR
+    org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongo: ERROR
