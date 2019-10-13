@@ -1,6 +1,6 @@
 package com.github.sparkmuse.spark.service;
 
-import com.github.sparkmuse.spark.model.DeletionClean;
+import com.github.sparkmuse.spark.model.Deletion;
 import com.github.sparkmuse.spark.service.extension.SparkExtension;
 import com.github.sparkmuse.spark.service.extension.SparkTest;
 import org.apache.spark.sql.Dataset;
@@ -30,7 +30,7 @@ class MapperServiceTest {
     }
 
     @Test
-    @DisplayName("maps to DeletionClean dataset from row dataset in a list")
+    @DisplayName("maps to Deletion dataset from row dataset in a list")
     void canMapElements() {
 
         List<String> list = asList(
@@ -39,13 +39,13 @@ class MapperServiceTest {
         Dataset<String> csvString = SPARK_SESSION.createDataset(list, Encoders.STRING());
         Dataset<Row> csv = SPARK_SESSION.read().csv(csvString);
 
-        List<DeletionClean> expected = asList(
+        List<Deletion> expected = asList(
                 createDeletion(),
                 createDeletion());
 
-        Dataset<DeletionClean> actualDataSet = mapperService.map(csv);
+        Dataset<Deletion> actualDataSet = mapperService.map(csv);
 
-        List<DeletionClean> actualList = actualDataSet.collectAsList();
+        List<Deletion> actualList = actualDataSet.collectAsList();
 
         assertThat(actualList)
                 .usingFieldByFieldElementComparator()
@@ -57,17 +57,17 @@ class MapperServiceTest {
     void canMapEmptyList() {
 
         Dataset<Row> csv = SPARK_SESSION.emptyDataFrame();
-        List<DeletionClean> expected = emptyList();
+        List<Deletion> expected = emptyList();
 
-        Dataset<DeletionClean> actualDataSet = mapperService.map(csv);
+        Dataset<Deletion> actualDataSet = mapperService.map(csv);
 
-        List<DeletionClean> actualList = actualDataSet.collectAsList();
+        List<Deletion> actualList = actualDataSet.collectAsList();
 
         assertThat(actualList).isEmpty();
     }
 
-    private static DeletionClean createDeletion() {
-        return DeletionClean.builder()
+    private static Deletion createDeletion() {
+        return Deletion.builder()
                 .creationDateTime("2019-12-01T00:00:01")
                 .creator("creator")
                 .deletionDateTime("2019-12-01T00:00:01")

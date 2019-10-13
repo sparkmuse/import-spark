@@ -1,6 +1,6 @@
 package com.github.sparkmuse.spark.service;
 
-import com.github.sparkmuse.spark.model.DeletionClean;
+import com.github.sparkmuse.spark.model.Deletion;
 import lombok.RequiredArgsConstructor;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -16,7 +16,7 @@ public class ImportService {
 
     public void process() {
         Dataset<Row> csv = readerService.read();
-        Dataset<DeletionClean> deletions = mapperService.map(csv);
+        Dataset<Deletion> deletions = mapperService.map(csv);
         writterService.write(deletions);
     }
 }

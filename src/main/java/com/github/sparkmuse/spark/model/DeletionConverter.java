@@ -10,23 +10,23 @@ public class DeletionConverter {
     private static final LocalDateTime DEFAULT_DATE = LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC);
     private static final Pattern USER_PATTERN = Pattern.compile("/user/");
 
-    public static DeletionClean from(Deletion deletion) {
+    public static Deletion from(DeletedTriple deletedTriple) {
 
-        LocalDateTime creationDateTime = getLocalDateTime(deletion.getCreationTimestamp());
-        LocalDateTime deletionDateTime = getLocalDateTime(deletion.getDeletionTimestamp());
+        LocalDateTime creationDateTime = getLocalDateTime(deletedTriple.getCreationTimestamp());
+        LocalDateTime deletionDateTime = getLocalDateTime(deletedTriple.getDeletionTimestamp());
 
-        String creator = getDefaultString(deletion.getCreator());
-        String deletor = getDefaultString(deletion.getDeletor());
+        String creator = getDefaultString(deletedTriple.getCreator());
+        String deletor = getDefaultString(deletedTriple.getDeletor());
 
-        return DeletionClean.builder()
+        return Deletion.builder()
                 .creationDateTime(creationDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .creator(creator)
                 .deletionDateTime(deletionDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .deletor(deletor)
-                .subject(deletion.getSubject())
-                .predicate(deletion.getPredicate())
-                .object(deletion.getObject())
-                .languageCode(deletion.getLanguageCode())
+                .subject(deletedTriple.getSubject())
+                .predicate(deletedTriple.getPredicate())
+                .object(deletedTriple.getObject())
+                .languageCode(deletedTriple.getLanguageCode())
                 .build();
     }
 

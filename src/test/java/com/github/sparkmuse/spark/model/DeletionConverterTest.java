@@ -1,8 +1,5 @@
-package com.github.sparkmuse.spark;
+package com.github.sparkmuse.spark.model;
 
-import com.github.sparkmuse.spark.model.Deletion;
-import com.github.sparkmuse.spark.model.DeletionClean;
-import com.github.sparkmuse.spark.model.DeletionConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -13,10 +10,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 class DeletionConverterTest {
 
     @Test
-    @DisplayName("converts from Deletion to Deletion Clean")
+    @DisplayName("converts from DeletedTriple to DeletedTriple Clean")
     void test() {
 
-        Deletion deletion = Deletion.builder()
+        DeletedTriple deletedTriple = DeletedTriple.builder()
                 .creationTimestamp("1575158401000")
                 .creator("/user/mwcl_musicbrainz")
                 .deletionTimestamp("1575244802000")
@@ -27,7 +24,7 @@ class DeletionConverterTest {
                 .languageCode("en")
                 .build();
 
-        DeletionClean expected = DeletionClean.builder()
+        Deletion expected = Deletion.builder()
                 .creationDateTime("2019-12-01T00:00:01")
                 .creator("mwcl_musicbrainz")
                 .deletionDateTime("2019-12-02T00:00:02")
@@ -38,7 +35,7 @@ class DeletionConverterTest {
                 .languageCode("en")
                 .build();
 
-        DeletionClean actual = DeletionConverter.from(deletion);
+        Deletion actual = DeletionConverter.from(deletedTriple);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -47,24 +44,24 @@ class DeletionConverterTest {
     @DisplayName("sets defaults")
     class ErrorFixerClass {
 
-        private Deletion deletion;
-        private DeletionClean expected;
+        private DeletedTriple deletedTriple;
+        private Deletion expected;
 
         @BeforeEach
         void setUp() {
-            deletion = Deletion.builder().build();
+            deletedTriple = DeletedTriple.builder().build();
 
-            expected = DeletionClean.builder()
+            expected = Deletion.builder()
                     .creationDateTime("1970-01-01T00:00:00")
                     .deletionDateTime("1970-01-01T00:00:00")
                     .build();
         }
 
         @Test
-        @DisplayName("when creation and deletion stamps are null")
+        @DisplayName("when creation and deletedTriple stamps are null")
         void returnNow() {
 
-            DeletionClean actual = DeletionConverter.from(deletion);
+            Deletion actual = DeletionConverter.from(deletedTriple);
 
             assertThat(actual).isEqualTo(expected);
         }
@@ -73,7 +70,7 @@ class DeletionConverterTest {
         @DisplayName("when creator and deletor are null")
         void returnNullCreatorDeletor() {
 
-            DeletionClean actual = DeletionConverter.from(deletion);
+            Deletion actual = DeletionConverter.from(deletedTriple);
 
             assertThat(actual).isEqualTo(expected);
         }

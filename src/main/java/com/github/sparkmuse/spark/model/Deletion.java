@@ -12,9 +12,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Deletion implements Serializable {
-    private String creationTimestamp;
+    private String creationDateTime;
     private String creator;
-    private String deletionTimestamp;
+    private String deletionDateTime;
     private String deletor;
     private String subject;
     private String predicate;

@@ -11,10 +11,10 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeletionClean implements Serializable {
-    private String creationDateTime;
+public class DeletedTriple implements Serializable {
+    private String creationTimestamp;
     private String creator;
-    private String deletionDateTime;
+    private String deletionTimestamp;
     private String deletor;
     private String subject;
     private String predicate;

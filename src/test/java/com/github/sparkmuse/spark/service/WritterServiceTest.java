@@ -2,7 +2,7 @@ package com.github.sparkmuse.spark.service;
 
 import com.github.sparkmuse.spark.config.PropertiesConfig;
 import com.github.sparkmuse.spark.config.SparkConfig;
-import com.github.sparkmuse.spark.model.DeletionClean;
+import com.github.sparkmuse.spark.model.Deletion;
 import com.github.sparkmuse.spark.properties.MySqlProperties;
 import com.github.sparkmuse.spark.properties.SparkProperties;
 import org.apache.commons.io.FileUtils;
@@ -64,13 +64,13 @@ class WritterServiceTest {
     @DisplayName("saves dataset to the database")
     void save() throws Exception {
 
-        List<DeletionClean> expected = singletonList(createDeletion());
-        Dataset<DeletionClean> dataSet = sparkSession.createDataset(expected, Encoders.bean(DeletionClean.class));
+        List<Deletion> expected = singletonList(createDeletion());
+        Dataset<Deletion> dataSet = sparkSession.createDataset(expected, Encoders.bean(Deletion.class));
         writterService.write(dataSet);
 
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("select * from deletions");
-        List<DeletionClean> actual = getDeletionCleans(resultSet);
+        List<Deletion> actual = getDeletionCleans(resultSet);
         resultSet.close();
 
         assertThat(actual)
@@ -83,21 +83,21 @@ class WritterServiceTest {
     @DisplayName("saves NOT empty dataset to the database")
     void saveNot() throws Exception {
 
-        Dataset<DeletionClean> dataSet = sparkSession.emptyDataset(Encoders.bean(DeletionClean.class));
+        Dataset<Deletion> dataSet = sparkSession.emptyDataset(Encoders.bean(Deletion.class));
         writterService.write(dataSet);
 
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("select * from deletions");
-        List<DeletionClean> actual = getDeletionCleans(resultSet);
+        List<Deletion> actual = getDeletionCleans(resultSet);
         resultSet.close();
 
         assertThat(actual).isEmpty();
     }
 
-    private static List<DeletionClean> getDeletionCleans(ResultSet resultSet) throws SQLException {
-        List<DeletionClean> result = new ArrayList<>();
+    private static List<Deletion> getDeletionCleans(ResultSet resultSet) throws SQLException {
+        List<Deletion> result = new ArrayList<>();
         while (resultSet.next()) {
-            final DeletionClean deletionClean = DeletionClean.builder()
+            final Deletion deletion = Deletion.builder()
                     .creationDateTime(resultSet.getString("creationDateTime"))
                     .creator(resultSet.getString("creator"))
                     .deletionDateTime(resultSet.getString("deletionDateTime"))
@@ -107,13 +107,13 @@ class WritterServiceTest {
                     .object(resultSet.getString("object"))
                     .languageCode(resultSet.getString("languageCode"))
                     .build();
-            result.add(deletionClean);
+            result.add(deletion);
         }
         return result;
     }
 
-    private static DeletionClean createDeletion() {
-        return DeletionClean.builder()
+    private static Deletion createDeletion() {
+        return Deletion.builder()
                 .creationDateTime("2019-12-01T00:00:01")
                 .creator("creator")
                 .deletionDateTime("2019-12-01T00:00:01")
