@@ -70,6 +70,13 @@ mvn clean package
 ```
 
 ### Running
+
+The following steps are needed to run the import job.
+
 ```shell script
 java --jar target/import-spark-1.0.0.jar
+
+curl 'http://localhost:8080/importjobs' -i -X POST
 ```
+
+Note that there can be only one job running simultaneously
