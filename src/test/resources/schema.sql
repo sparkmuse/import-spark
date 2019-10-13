@@ -1,7 +1,7 @@
 
 CREATE TABLE IF NOT EXISTS `deletions`
 (
-    id                 INT AUTO_INCREMENT PRIMARY KEY,
+    `id`                 INT AUTO_INCREMENT PRIMARY KEY,
     `creationDateTime` timestamp DEFAULT NULL,
     `creator`          varchar(250),
     `deletionDateTime` timestamp DEFAULT NULL,

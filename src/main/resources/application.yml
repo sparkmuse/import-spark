@@ -3,7 +3,7 @@ mysql:
   host: localhost
   port: 3306
   serverTimezone: Europe/Berlin
-  database: DataHorizontal
+  database: deletionsdb
   table: deletions
   url: jdbc:mysql://${mysql.host}:${mysql.port}/${mysql.database}?serverTimezone=${mysql.serverTimezone}
   connection:

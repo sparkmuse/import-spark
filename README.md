@@ -46,16 +46,16 @@ src/java/resources/application.properties
 
 Create the sql table by running the following statement
 ```mysql
-CREATE DATABASE IF NOT EXISTS DataHorizontal;
+CREATE DATABASE IF NOT EXISTS deletionsdb;
 
-USE DataHorizontal;
+USE deletionsdb;
 
 CREATE TABLE IF NOT EXISTS `deletions`
 (
-    id                 INT AUTO_INCREMENT PRIMARY KEY,
-    `creationDateTime` timestamp DEFAULT NULL,
+    `id`                INT AUTO_INCREMENT PRIMARY KEY,
+    `creationDateTime` datetime DEFAULT NULL,
     `creator`          varchar(250),
-    `deletionDateTime` timestamp DEFAULT NULL,
+    `deletionDateTime` date DEFAULT NULL,
     `deletor`          varchar(250),
     `subject`          varchar(250),
     `predicate`        varchar(250),
