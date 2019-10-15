@@ -26,16 +26,16 @@ import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = {
-        MySqlProperties.class, SparkConfig.class, SparkProperties.class, PropertiesConfig.class, WritterService.class
+        MySqlProperties.class, SparkConfig.class, SparkProperties.class, PropertiesConfig.class, WriterService.class
 })
 @ActiveProfiles("test")
-class WritterServiceTest {
+class WriterServiceTest {
 
     @Autowired
     private MySqlProperties properties;
 
     @Autowired
-    private WritterService writterService;
+    private WriterService writerService;
 
     @Autowired
     private SparkSession sparkSession;
@@ -66,7 +66,7 @@ class WritterServiceTest {
 
         List<Deletion> expected = singletonList(createDeletion());
         Dataset<Deletion> dataSet = sparkSession.createDataset(expected, Encoders.bean(Deletion.class));
-        writterService.write(dataSet);
+        writerService.write(dataSet);
 
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("select * from deletions");
@@ -84,7 +84,7 @@ class WritterServiceTest {
     void saveNot() throws Exception {
 
         Dataset<Deletion> dataSet = sparkSession.emptyDataset(Encoders.bean(Deletion.class));
-        writterService.write(dataSet);
+        writerService.write(dataSet);
 
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("select * from deletions");

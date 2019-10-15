@@ -21,7 +21,7 @@ class SparkImportServiceTest {
     private MapperService mapperService;
 
     @Mock
-    private WritterService writterService;
+    private WriterService writerService;
 
     @Mock
     private ImportJobRepository importJobRepository;
@@ -31,7 +31,7 @@ class SparkImportServiceTest {
     @BeforeEach
     void setUp() {
         this.sparkImportService =
-                new SparkImportService(readerService, mapperService, writterService, importJobRepository);
+                new SparkImportService(readerService, mapperService, writerService, importJobRepository);
     }
 
     @Test
@@ -42,7 +42,7 @@ class SparkImportServiceTest {
 
         verify(readerService).read();
         verify(mapperService).map(any());
-        verify(writterService).write(any());
+        verify(writerService).write(any());
         verify(importJobRepository).deleteAll();
 
     }

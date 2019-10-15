@@ -14,14 +14,14 @@ public class SparkImportService {
 
     private final ReaderService readerService;
     private final MapperService mapperService;
-    private final WritterService writterService;
+    private final WriterService writerService;
     private final ImportJobRepository importJobRepository;
 
     @Async
     public void process() {
         Dataset<Row> csv = readerService.read();
         Dataset<Deletion> deletions = mapperService.map(csv);
-        writterService.write(deletions);
+        writerService.write(deletions);
         importJobRepository.deleteAll();
     }
 }
